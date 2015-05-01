@@ -85,7 +85,7 @@ define(function(require, exports, module) {
 
            if(message['req'] == 'add') {
 
-             appObj.float.hidePanel();
+
 
              taskContainer.push(message['body']);
 
@@ -199,6 +199,8 @@ define(function(require, exports, module) {
              channel : "famo.us-app",
              message : {"req" : "add" , "body" : taskObj },
            });
+
+           appObj.float.hidePanel();
 
         }
 
