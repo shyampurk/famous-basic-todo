@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+	<head>
+		<title>ToDo App</title>
+        <meta name="viewport" content="width=device-width, maximum-scale=1, user-scalable=no" />
+				<!-- shims for backwards compatibility -->
+        <script type="text/javascript" src="http://code.famo.us/lib/functionPrototypeBind.js"></script>
+        <script type="text/javascript" src="http://code.famo.us/lib/classList.js"></script>
+        <script type="text/javascript" src="http://code.famo.us/lib/requestAnimationFrame.js"></script>
+
+        <!-- module loader -->
+        <script type="text/javascript" src="http://code.famo.us/lib/require.js"></script>
+
+        <!-- famous -->
+        <link rel="stylesheet" type="text/css" href="http://code.famo.us/famous/0.3.0/famous.css" />
+
+        <!--
+				<script type="text/javascript" src="http://code.famo.us/famous/0.3.0/famous.min.js"></script>
+				-->
+				<script type="text/javascript" src="js/famous.js"></script>
+				<script type="text/javascript" src="js/jquery.min.js"></script>
+				<script type="text/javascript" src="js/jquery.pulse.min.js"></script>
+				<script src="http://cdn.pubnub.com/pubnub-3.7.1.min.js"></script>
+
+        <!-- app code -->
+
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
+				<script type="text/javascript">
+            require.config({
+                baseUrl: './app/'
+            });
+            require(['todo'],function(ToDo){
+
+							var TodoApp = new ToDo();
+							TodoApp.init();
+
+						});
+
+
+
+
+        </script>
+	</head>
+	<body>
+		<div id="AppFrame">
+
+		</div>
+
+	</body>
+</html>
