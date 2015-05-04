@@ -202,6 +202,14 @@ define(function(require, exports, module) {
 
            appObj.float.hidePanel();
 
+        } else {
+
+          if($('#taskAddOwner').val() == "Select Name"){
+
+            $('#taskAddOwner').pulse({opacity: 0.5}, {duration : 200, pulses : 3});
+
+          }
+
         }
 
 
@@ -258,6 +266,14 @@ define(function(require, exports, module) {
            appObj.float.clearModifyPanel();
            appObj.float.hidePanel();
            StatCounter.clearCurrTaskModifyId();
+
+        } else {
+
+          if($('#taskModOwner').val() == "Select Name"){
+
+            $('#taskModOwner').pulse({opacity: 0.5}, {duration : 200, pulses : 3});
+
+          }
 
         }
 

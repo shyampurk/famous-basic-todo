@@ -212,6 +212,9 @@ define(function(require, exports, module) {
 
   TaskPanel.prototype.modifyTask = function modifyTask(taskObj) {
 
+    var modifiedContent = null;
+    var contPos = 0;
+
     for(var cnt = 0 ; cnt < this.taskSurfaces.length ; cnt++){
 
       if(this.taskSurfaces[cnt][1].taskData.taskid == taskObj.taskid){
@@ -219,9 +222,40 @@ define(function(require, exports, module) {
         this.taskSurfaces[cnt][1].taskData = taskObj;
         this.taskSurfaces[cnt][1].setContent(_frameTaskContent(taskObj));
 
+        contPos = cnt;
+        modifiedContent = this.taskSurfaces[cnt];
+
         break;
 
       }
+
+    }
+
+    var opacTrans = new Transitionable(1);
+    opacTrans.set(1, { duration: 1000 });
+
+    var modifier    = modifiedContent[0];
+    var taskSurface = modifiedContent[1];
+    var transformer = modifiedContent[2];
+
+    modifier.opacityFrom(function(){
+
+      return opacTrans.get();
+
+    });
+
+    for(cnt = contPos - 1 ; cnt >= 0 ; cnt--){
+
+      this.taskSurfaces[cnt + 1] = this.taskSurfaces[cnt];
+
+    }
+
+    this.taskSurfaces[0] = modifiedContent;
+    transformer.setTranslate([10,10,0]);
+
+    for(cnt = 1 ; cnt <= contPos ; cnt++){
+
+      this.taskSurfaces[cnt][2].setTranslate([10, (50 * cnt) + 10], { duration: 500 });
 
     }
 
