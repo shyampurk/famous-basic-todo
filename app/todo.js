@@ -155,9 +155,9 @@ define(function(require, exports, module) {
 
 
       $('body').on("click",'#taskAddButton',function(){
-        //addtask();
+
         appObj.float.displayAddTaskPanel()
-        //taskAddSurfaceTrans.setTranslate([10, headerHeight + 20, 0] , {duration : 250, curve : Easing.outCubic});
+        
       });
 
       $('body').on("click",'#backButton',function(){

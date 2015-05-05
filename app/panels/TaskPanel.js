@@ -212,6 +212,8 @@ define(function(require, exports, module) {
 
   TaskPanel.prototype.modifyTask = function modifyTask(taskObj) {
 
+    var that = this;
+
     var modifiedContent = null;
     var contPos = 0;
 
@@ -220,8 +222,7 @@ define(function(require, exports, module) {
       if(this.taskSurfaces[cnt][1].taskData.taskid == taskObj.taskid){
 
         this.taskSurfaces[cnt][1].taskData = taskObj;
-        this.taskSurfaces[cnt][1].setContent(_frameTaskContent(taskObj));
-
+        
         contPos = cnt;
         modifiedContent = this.taskSurfaces[cnt];
 
@@ -231,12 +232,33 @@ define(function(require, exports, module) {
 
     }
 
-    var opacTrans = new Transitionable(1);
-    opacTrans.set(1, { duration: 1000 });
-
     var modifier    = modifiedContent[0];
     var taskSurface = modifiedContent[1];
     var transformer = modifiedContent[2];
+
+    var opacTrans = new Transitionable(1);
+    opacTrans.set(0, { duration: 1000 }, function(){
+
+      for(cnt = contPos - 1 ; cnt >= 0 ; cnt--){
+
+        that.taskSurfaces[cnt + 1] = that.taskSurfaces[cnt];
+
+      }
+
+      that.taskSurfaces[0] = modifiedContent;
+      transformer.setTranslate([10,10,0]);
+
+      for(cnt = 1 ; cnt <= contPos ; cnt++){
+
+        that.taskSurfaces[cnt][2].setTranslate([10, (50 * cnt) + 10], { duration: 500 });
+
+      }
+
+      opacTrans.set(1, { duration: 1000 });
+      modifiedContent[1].setContent(_frameTaskContent(taskObj));
+
+    });
+
 
     modifier.opacityFrom(function(){
 
@@ -244,20 +266,7 @@ define(function(require, exports, module) {
 
     });
 
-    for(cnt = contPos - 1 ; cnt >= 0 ; cnt--){
 
-      this.taskSurfaces[cnt + 1] = this.taskSurfaces[cnt];
-
-    }
-
-    this.taskSurfaces[0] = modifiedContent;
-    transformer.setTranslate([10,10,0]);
-
-    for(cnt = 1 ; cnt <= contPos ; cnt++){
-
-      this.taskSurfaces[cnt][2].setTranslate([10, (50 * cnt) + 10], { duration: 500 });
-
-    }
 
   }
 
