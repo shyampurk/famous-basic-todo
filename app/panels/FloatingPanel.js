@@ -136,6 +136,7 @@ define(function(require, exports, module) {
     this.modifyTrans = {};
 
     this.currentTrans = null;
+    this.currentScreen = null;
 
     this.modifyEvent = null
 
@@ -169,6 +170,10 @@ define(function(require, exports, module) {
 
       this.currentTrans = this.addTrans.taskAddSurfaceTrans;
 
+      this.currentScreen = this.addContainer;
+
+      this.currentScreen.setProperties({'display':'block'});
+
     }
 
   }
@@ -180,6 +185,11 @@ define(function(require, exports, module) {
       this.modifyTrans.taskModSurfaceTrans.setTranslate([0, 0, 0] , {duration : 250, curve : Easing.outCubic});
 
       this.currentTrans = this.modifyTrans.taskModSurfaceTrans;
+
+      this.currentScreen = this.modifyContainer;
+
+      this.currentScreen.setProperties({'display':'block'});
+
     }
 
   }
@@ -191,6 +201,10 @@ define(function(require, exports, module) {
       this.currentTrans.setTranslate([-this.width, 0, 0] , {duration : 250, curve : Easing.outCubic});
 
       this.currentTrans = null;
+
+      this.currentScreen.setProperties({'display':'none'});
+
+      this.currentScreen = null;
 
     }
 
@@ -228,7 +242,7 @@ define(function(require, exports, module) {
 
   }
 
-  
+
   FloatingPanel.prototype.connectModifyEvent = function connectModifyEvent(evObj){
 
 
@@ -260,6 +274,7 @@ define(function(require, exports, module) {
         color : FLOATINGPANEL_CONT_FG_COLOR,
         overflowY: 'auto',
         overflowX: 'hidden',
+        display : 'none',
         zIndex : FLOATINGPANEL_CONT_Z_STACK
       }
     });
@@ -322,6 +337,7 @@ define(function(require, exports, module) {
         color : FLOATINGPANEL_CONT_FG_COLOR,
         overflowY: 'auto',
         overflowX: 'hidden',
+        display : 'none',
         zIndex : FLOATINGPANEL_CONT_Z_STACK
       }
     });
