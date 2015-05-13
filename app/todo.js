@@ -22,7 +22,7 @@ define(function(require, exports, module) {
 
     /**ToDo App Objects**/
     var HeaderPanel = require('panels/HeaderPanel');
-    var BoxPanel = require('panels/BoxPanel');
+    var PagePanel = require('panels/PagePanel');
     var FloatingPanel = require('panels/FloatingPanel');
 
     var StatCounter = require('utils/Stats');
@@ -36,7 +36,7 @@ define(function(require, exports, module) {
 
       this.context = Engine.createContext(document.getElementById('AppFrame'));
       this.context.setPerspective(1000);
-      this.box = new BoxPanel(width - 20,(height - height / 8) - 30);
+      this.page = new PagePanel(width - 20,(height - height / 8) - 30);
 
       this.contentView = new View();
       this.contentModifier = new Modifier({
@@ -45,7 +45,7 @@ define(function(require, exports, module) {
 
 
       this.header = new HeaderPanel(width,headerHeight);
-      this.box = new BoxPanel(width,height);
+      this.page = new PagePanel(width,height);
       this.float = new FloatingPanel(width,height,headerHeight);
 
     }
@@ -57,12 +57,12 @@ define(function(require, exports, module) {
 
       //Call setupPanel() for all Famo.us containers
       this.header.setupPanel(headerHeight);
-      this.box.setupPanel();
+      this.page.setupPanel();
       this.float.setupPanel();
 
       //Add all panel to the container view
       this.header.addTo(this.context);
-      this.box.addTo(this.contentView);
+      this.page.addTo(this.contentView);
       this.float.addTo(this.contentView);
 
       //Add contanier view to the Famo.us context
@@ -89,7 +89,7 @@ define(function(require, exports, module) {
 
              taskContainer.push(message['body']);
 
-             appObj.box.addTask(message['body']);
+             appObj.page.addTask(message['body']);
 
 
              if(message['body']['status']) {
@@ -100,8 +100,8 @@ define(function(require, exports, module) {
 
              StatCounter.setLastUpdate(message['body']['date']);
 
-             appObj.box.updateTaskHeader();
-             appObj.box.updateIntroContent();
+             appObj.page.updateTaskHeader();
+             appObj.page.updateIntroContent();
 
 
            } else if(message['req'] == 'modify') {
@@ -119,9 +119,9 @@ define(function(require, exports, module) {
 
               StatCounter.setLastUpdate(message['body']['date']);
 
-              appObj.box.updateTaskHeader();
-              appObj.box.updateIntroContent();
-              appObj.box.modifyTask(message['body']);
+              appObj.page.updateTaskHeader();
+              appObj.page.updateIntroContent();
+              appObj.page.modifyTask(message['body']);
 
            }
 
@@ -130,7 +130,7 @@ define(function(require, exports, module) {
        });
 
       //Famo.us widget event handling
-      appObj.float.connectModifyEvent(appObj.box.getModifyEvent());
+      appObj.float.connectModifyEvent(appObj.page.getModifyEvent());
 
       //JQuery Event Handling
       $('body').on("click",'#loginButton',function(){
@@ -143,25 +143,25 @@ define(function(require, exports, module) {
             loginUser = $('select').val();
             StatCounter.setUsername(loginUser);
 
-            appObj.box.switchoffLoginPanel();
-            appObj.box.updateTaskHeader();
+            appObj.page.switchoffLoginPanel();
+            appObj.page.updateTaskHeader();
           }
 
       });
 
       $('body').on("click",'#taskButton',function(){
-        appObj.box.displayTaskPanel();
+        appObj.page.displayTaskPanel();
       });
 
 
       $('body').on("click",'#taskAddButton',function(){
 
         appObj.float.displayAddTaskPanel()
-        
+
       });
 
       $('body').on("click",'#backButton',function(){
-        appObj.box.displayFrontPanel();
+        appObj.page.displayFrontPanel();
       });
 
       $('body').on("click",'#taskBackButton',function(){
