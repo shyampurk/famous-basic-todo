@@ -65,7 +65,7 @@ define(function(require, exports, module) {
       this.page.addTo(this.contentView);
       this.float.addTo(this.contentView);
 
-      //Add contanier view to the Famo.us context
+      //Add container view to the Famo.us context
       this.context.add(this.contentModifier).add(this.contentView);
 
       //Initialize all DOM events
