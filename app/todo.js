@@ -106,16 +106,30 @@ define(function(require, exports, module) {
 
            } else if(message['req'] == 'modify') {
 
-              if(message['body']['status'] == 1) {
+             switch(message['body']['status']){
+
+               case -1:
+                 message['body']['status'] = true;
+                 break;
+
+               case 0:
+                 message['body']['status'] = false;
+                 break;
+
+               case 1:
                  StatCounter.setCompletedTasks(StatCounter.getCompletedTasks() + 1);
                  message['body']['status'] = true;
-              }
+                 break;
 
-              if(message['body']['status'] == 2) {
-                 StatCounter.setCompletedTasks(StatCounter.getCompletedTasks() - 1);
-                 message['body']['status'] = false;
-              }
+              case 2:
+                StatCounter.setCompletedTasks(StatCounter.getCompletedTasks() - 1);
+                message['body']['status'] = false;
+                break;
 
+              default:
+                break;
+
+             }
 
               StatCounter.setLastUpdate(message['body']['date']);
 
@@ -252,6 +266,16 @@ define(function(require, exports, module) {
           }
           if((StatCounter.getCurrTaskModifyStatus() != taskObj.status) && (false == taskObj.status) ) {
             modPublishStatus = 2; //Decrement Completed tasks
+          }
+
+          //If modPublishStatus is still zero , which means no change in status
+          //encode the current status
+          if(modPublishStatus == 0){
+
+            if(taskObj.status){
+              modPublishStatus = -1;
+            }
+
           }
 
           //Update status with the special meaning for publishing modify data

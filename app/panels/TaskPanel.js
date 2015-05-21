@@ -222,7 +222,7 @@ define(function(require, exports, module) {
       if(this.taskSurfaces[cnt][1].taskData.taskid == taskObj.taskid){
 
         this.taskSurfaces[cnt][1].taskData = taskObj;
-        
+
         contPos = cnt;
         modifiedContent = this.taskSurfaces[cnt];
 
@@ -318,7 +318,7 @@ define(function(require, exports, module) {
     taskContent+= TASKPANEL_TASK_CONTENT_TIME_POST;
 
     if(taskObj.status){
-      taskContent+= 'checked';
+        taskContent+= 'checked';
     }
 
     taskContent+= TASKPANEL_TASK_CONTENT_STATUS_POST;
